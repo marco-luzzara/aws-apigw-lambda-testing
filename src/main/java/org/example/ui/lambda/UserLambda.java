@@ -9,9 +9,12 @@ import java.util.function.Supplier;
 public class UserLambda {
     @Bean
     public Supplier<String> testFunction() {
-        return () -> {
-            throw new IllegalArgumentException("this is the error to match");
-        };
+        return () -> "test";
+    }
+
+    @Bean
+    public Supplier<String> testFunction2() {
+        return () -> "test2";
     }
 
 //    @Bean

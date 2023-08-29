@@ -17,8 +17,7 @@ create_lambda() {
             --environment "{
                             \"Variables\": {\"JAVA_TOOL_OPTIONS\": \"-DMAIN_CLASS=org.example.CloudProjectApplication \
                                                                      -Dlogging.level.org.springframework=INFO \
-                                                                     -Dspring.profiles.active=localstack \
-                                                                     -Dspring.cloud.function.definition=$_FUNCTION_NAME\"}
+                                                                     -Dspring.profiles.active=localstack\"}
                           }" \
             --query "FunctionArn"
     )"

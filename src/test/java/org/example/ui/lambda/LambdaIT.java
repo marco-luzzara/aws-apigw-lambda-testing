@@ -37,10 +37,10 @@ public class LambdaIT {
     }
 
     @Test
-    void whenUserRegisterWithApi_thenIdIsReturned() throws IOException, InterruptedException
+    void testLambda() throws IOException, InterruptedException
     {
         var httpResponse = apiCaller.callTestFunction();
 
-        assertThat(httpResponse.statusCode()).isEqualTo(HttpStatus.SC_NOT_FOUND);
+        assertThat(httpResponse.body()).isEqualTo("test");
     }
 }

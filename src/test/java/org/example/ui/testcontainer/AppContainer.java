@@ -29,8 +29,6 @@ public class AppContainer extends LocalStackContainer {
 
     private String restApiId;
     private String apiUsersResourceId;
-    private String apiUsersWithParamResourceId;
-    private String apiShopsResourceId;
     private static final Gson gson = new Gson();
 
     private boolean keepLambdasOpenedAfterExit;
@@ -113,7 +111,6 @@ public class AppContainer extends LocalStackContainer {
 
         this.restApiId = setupResult.restApiId();
         this.apiUsersResourceId = setupResult.apiUsersResourceId();
-        this.apiShopsResourceId = setupResult.apiShopsResourceId();
     }
 
     public void completeSetup() {
@@ -128,26 +125,13 @@ public class AppContainer extends LocalStackContainer {
         Objects.requireNonNull(this.restApiId);
         Objects.requireNonNull(this.apiUsersResourceId);
 
-        var userCreateLambdaArn = executeScriptInsideContainer("/app/scripts/create-lambda-with-api-integration.sh",
+        executeScriptInsideContainer("/app/scripts/create-lambda-with-api-integration.sh",
                 Map.of(
                         "_LAMBDA_NAME", "testFunction",
                         "_FUNCTION_NAME", "testFunction",
                         "_RESOURCE_ID", this.apiUsersResourceId,
                         "_HTTP_METHOD", "GET",
                         "_REST_API_ID", this.restApiId
-                ), String.class);
-
-        addErrorResponseForApi(this.apiUsersResourceId, "GET", 404, ".*error to match.*");
-    }
-
-    private void addErrorResponseForApi(String resourceId, String httpMethod, int statusCode, String regexErrorPattern) {
-        executeScriptInsideContainer("/app/scripts/put-method-err-response.sh",
-                Map.of(
-                        "_REST_API_ID", this.restApiId,
-                        "_RESOURCE_ID", resourceId,
-                        "_HTTP_METHOD", httpMethod,
-                        "_STATUS_CODE", String.valueOf(statusCode),
-                        "_REGEX_ERROR_PATTERN", regexErrorPattern
                 ));
     }
 
