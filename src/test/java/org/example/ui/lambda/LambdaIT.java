@@ -1,7 +1,5 @@
 package org.example.ui.lambda;
 
-import com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http.HttpStatus;
-import org.example.ui.dto.requests.UserCreationRequest;
 import org.example.ui.testcontainer.AppContainer;
 import org.example.ui.testcontainer.LocalstackRestApiCaller;
 import org.junit.jupiter.api.AfterEach;
