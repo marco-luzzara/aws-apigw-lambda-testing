@@ -36,20 +36,9 @@ main() {
         )" \
     )"
 
-    local API_SHOP_RESOURCE_ID
-    API_SHOP_RESOURCE_ID="$( \
-        get_retval_from "$( \
-            _REST_API_ID="$REST_API_ID" \
-            _PARENT_RESOURCE_ID="$API_ROOT_RESOURCE_ID" \
-            _PATH_PART="shops" \
-            create_api_resource \
-        )" \
-    )"
-
     SETUP_RESPONSE="{ \
         \"restApiId\": \"$REST_API_ID\", \
-        \"apiUsersResourceId\": \"$API_USER_RESOURCE_ID\", \
-        \"apiShopsResourceId\": \"$API_SHOP_RESOURCE_ID\" \
+        \"apiUsersResourceId\": \"$API_USER_RESOURCE_ID\" \
     }"
     return_with "$SETUP_RESPONSE"
 }
