@@ -1,0 +1,22 @@
+variable "authorizer_lambda_info" {
+  description = "The authorizer lambda info"
+  type    = object({
+    invoke_arn: string
+    function_name: string
+    lambda_arn: string
+  })
+}
+
+variable "admin_lambda_info" {
+  description = "The admin lambda info"
+  type    = object({
+    invoke_arn: string
+    function_name: string
+    lambda_arn: string
+  })
+}
+
+variable "cognito_user_pool_arn" {
+  description = "ARN of User pool client used to authenticate users"
+  type    = string
+}

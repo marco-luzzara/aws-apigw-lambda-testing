@@ -17,6 +17,8 @@ def SPRING_VERSION = '3.1.1'
 def JUNIT_VERSION = '5.8.1'
 
 dependencies {
+    implementation platform("software.amazon.awssdk:bom:2.20.150")
+
     // spring
     implementation "org.springframework.boot:spring-boot-starter:${SPRING_VERSION}"
     implementation "org.springframework.boot:spring-boot-starter-aop:${SPRING_VERSION}"
@@ -50,18 +52,33 @@ dependencies {
     runtimeOnly ('org.apache.logging.log4j:log4j-slf4j-impl:2.17.1') {
         exclude group: 'org.slf4j', module: 'log4j-to-slf4j'
     }
+
+    implementation 'software.amazon.awssdk:cognitoidentity'
+    implementation 'software.amazon.awssdk:cognitoidentityprovider'
+    implementation "software.amazon.awssdk:iam"
+
+    implementation 'com.auth0:java-jwt:4.4.0'
 }
+
+var DIST_FOLDER = "${project.buildDir}/dist"
 
 task buildZip(type: Zip) {
     into('lib') {
         from(jar)
+        from "${rootProject.rootDir}/src/main/resources/AwsSdkV2DisableCertificateValidation-1.0.jar"
         from(configurations.runtimeClasspath)
     }
-    archiveFileName = "${rootProject.name}.zip"
-    destinationDirectory = file('dist')
+    archiveFileName = "dist.zip"
+    destinationDirectory = file(DIST_FOLDER)
 }
 
-tasks.named('test') {
+task buildHotReloadFolder(type: Copy) {
+    from zipTree("$DIST_FOLDER/dist.zip")
+    into "${project.buildDir}/hot-reload"
+
     dependsOn buildZip
-    useJUnitPlatform()
+}
+
+classes {
+    finalizedBy buildZip
 }

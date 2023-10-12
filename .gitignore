@@ -1,3 +1,6 @@
+scripts/apikey.secret
+scripts/volumes/
+
 .idea/
 .gradle
 build/

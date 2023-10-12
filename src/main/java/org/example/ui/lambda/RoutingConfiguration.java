@@ -18,8 +18,7 @@ public class RoutingConfiguration {
         return new MessageRoutingCallback() {
             @Override
             public String routingResult(Message<?> message) {
-                logger.info("Inspecting message headers - " + message.getHeaders());
-                return Optional.ofNullable((String) message.getHeaders().get("spring_cloud_function_definition")).orElseThrow();
+                return Optional.ofNullable((String) message.getHeaders().get("X-Spring-Cloud-Function-Definition")).orElseThrow();
             }
         };
     }
